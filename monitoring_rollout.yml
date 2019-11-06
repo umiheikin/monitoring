@@ -1,6 +1,7 @@
 - hosts: localhost
   connection: local
   gather_facts: False
+  become: False
   vars:
     hostname: Monitoring-Server
     ec2_access_key: "{{ lookup('env', 'ansible_aws_access_key') }}"
