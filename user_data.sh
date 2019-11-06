@@ -2,7 +2,7 @@
 
 
 
-
+echo "Starting the script execution"
 #Create ssh user
 sudo echo -e "$remote_pass\nremote_pass" | passwd ec2-user
 sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
