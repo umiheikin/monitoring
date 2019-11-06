@@ -2,6 +2,13 @@
 
 
 
+
+#Create ssh user
+sudo echo -e "$remote_pass\nremote_pass" | passwd ec2-user
+sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sudo echo "AllowUsers ec2-user" >> /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
 #Install Docker
 
 echo "Starting to install docker"
@@ -19,14 +26,9 @@ sudo systemctl start docker.service
 
 echo "Starting to install Docker Compose"
 
-sudo yum install epel-release
+sudo yum install -y epel-release
 sudo yum install -y python-pip
-sudo pip install docker-compose
+sudo pip install -y docker-compose
 sudo yum upgrade python*
 docker-compose version
 
-#Create ssh user
-sudo echo -e "$remote_pass\nremote_pass" | passwd ec2-user
-sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-sudo echo "AllowUsers ec2-user" >> /etc/ssh/sshd_config
-sudo systemctl restart sshd
