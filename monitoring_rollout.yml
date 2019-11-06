@@ -1,7 +1,6 @@
 - hosts: localhost
   connection: local
   gather_facts: False
-  become: False
   vars:
     hostname: Monitoring-Server
     ec2_access_key: "{{ lookup('env', 'ansible_aws_access_key') }}"
@@ -20,3 +19,17 @@
            region={{ region }}
            group={{ group }}
            wait=true
+
+    - pause:
+        minutes: 1
+
+    - name: Gathers facts (instance metadata) about Monitoring-Server
+      ec2_instance_facts:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "{{ hostname }}"
+          instance-state-name: running
+      register: ec2_instance_facts
+    -  set_fact:
+         msg: "{{ ec2_instance_facts | json_query('instances[*].public_ip_address') }}"
+    - debug: var=msg
