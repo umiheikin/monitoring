@@ -18,6 +18,7 @@
            instance_tags='{ "Name":"{{ hostname }}" }'
            region={{ region }}
            group={{ group }}
+           user_data: "{{ lookup('file', 'user_data.sh') }}"
            wait=true
 
     - pause:
