@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 #Install Docker
 
 echo "Starting to install docker"
@@ -22,3 +24,9 @@ sudo yum install -y python-pip
 sudo pip install docker-compose
 sudo yum upgrade python*
 docker-compose version
+
+#Create ssh user
+sudo echo -e "$remote_pass\nremote_pass" | passwd ec2-user
+sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sudo echo "AllowUsers ec2-user" >> /etc/ssh/sshd_config
+sudo systemctl restart sshd
