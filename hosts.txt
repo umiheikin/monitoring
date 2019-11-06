@@ -1,5 +1,5 @@
 [local]
-localhost
+localhost ansible_connection=local ansible_python_interpreter=python3
 
 [prod]
 server-site ansible_host=35.176.232.74
