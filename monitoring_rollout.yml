@@ -33,7 +33,7 @@
       register: ec2_info
 
     -  set_fact:
-         msg: "{{ ec2_instance_facts | json_query('instances[*].public_ip_address') }}"
+         msg: "{{ ec2_info | json_query('instances[*].public_ip_address') }}"
     - debug: var=msg
 
     - name: Add the newly created EC2 instance(s) to the local host group
