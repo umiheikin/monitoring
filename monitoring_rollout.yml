@@ -19,7 +19,8 @@
            instance_tags='{ "Name":"{{ hostname }}" }'
            region={{ region }}
            exact_count:1
-           count_tag:'{ "Name":"{{ hostname }}" }'
+           count_tag:
+             Name:{{ hostname }}
            group={{ group }}
            user_data={{ lookup('file', 'user_data.sh') }}
            wait=true
