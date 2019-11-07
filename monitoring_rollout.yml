@@ -36,10 +36,16 @@
          msg: "{{ ec2_info | json_query('instances[*].public_ip_address') }}"
     - debug: var=msg
 
+    - name: Add new group to inventory
+      lineinfile:
+        path: hosts.txt
+        state: present
+        line: '[EC2]'
+        insertafter: EOF
+
     - name: Add the newly created EC2 instance(s) to the local host group
-      local_action: lineinfile
-                    path=hosts.txt
-                    line="[EC2]"
-                    regexp={{ item.public_ip_address }}
-                    insertafter="[EC2]" line={{ item.public_ip_address }}
+      lineinfile:
+        path=hosts.txt
+        regexp={{ item.public_ip_address }}
+        insertafter="[EC2]" line={{ item.public_ip_address }}
       with_items: '{{ ec2_info.instances }}'
