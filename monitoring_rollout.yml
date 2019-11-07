@@ -10,7 +10,7 @@
     group: "SSH-HTTP-MONITORING"
     region: "eu-central-1"
   tasks:
-    - name: make_one_instance
+    - name: Create EC2 instance and run user_data.sh
       ec2: image={{ image }}
            instance_type={{ instance_type }}
            aws_access_key={{ ec2_access_key }}
@@ -18,6 +18,8 @@
            key_name=yuriy-aws-frankfurt
            instance_tags='{ "Name":"{{ hostname }}" }'
            region={{ region }}
+           exact_count: 1
+           count_tag:'{ "Name":"{{ hostname }}" }'
            group={{ group }}
            user_data={{ lookup('file', 'user_data.sh') }}
            wait=true
