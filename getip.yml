@@ -1,0 +1,56 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    hostname: Jenkins
+    instance_type: "t2.micro"
+    region: "eu-central-1"
+
+  tasks:
+
+    - name: Gathers facts (instance metadata) about Monitoring-Server
+      ec2_instance_facts:
+        region: "{{ region }}"
+        filters: 
+          "tag:Name": "{{ hostname }}"
+          instance-state-name: running
+      register: ec2_info
+
+    - name: Print public IP
+      debug:
+        msg: "{{ item.public_ip_address }}"
+      with_items: "{{ ec2_info.instances }}"
+      loop_control:
+        label: "{{ item.public_ip_address }}"
+
+    - name: Add the newly created EC2 instance to inventory dinamically
+      add_host:
+        name: '{{ item.public_ip_address }}'
+        groups: 'EC2' 
+      with_items: "{{ ec2_info.instances }}"
+      loop_control:
+        label: "{{ item.public_ip_address }}"
+
+
+    - name: Add the newly created EC2 instance(s) to the local host group
+      local_action: lineinfile 
+                    path=hosts.txt
+                    regexp={{ item.public_ip_address }} 
+                    insertafter="[AWS:children]" line={{ item.public_ip_address }}
+      with_items: '{{ ec2_info.instances }}'
+
+
+    - set_fact:
+         msg: "IP address of the new EC2 instance {{ ec2_info | json_query('instances[*].public_ip_address') }} has been added to the hosts.txt"
+    - debug: var=msg
+
+    - name: Save info of the EC2 instance
+      local_action: copy content="My IP is\n{{ ec2_info | json_query('instances[*].public_ip_address') }}" dest=/Users/mihey/ansible/test.log
+
+- hosts: EC2
+
+  tasks:
+    - name: print text from ec2 instance
+      debug:
+        msg: "This test written from ec2 instances"  

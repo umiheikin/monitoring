@@ -21,6 +21,7 @@
            group={{ group }}
            user_data={{ lookup('file', 'user_data.sh') }}
            wait=true
+      register: ec2_info
 
     - pause:
         minutes: 1
