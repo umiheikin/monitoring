@@ -10,3 +10,7 @@ server-site_dr ansible_host=3.10.41.81
 [AWS:children]
 prod
 dr
+[EC2]
+3.121.116.103
+52.59.216.18
+18.185.112.0
