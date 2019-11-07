@@ -23,8 +23,12 @@
            wait=true
       register: ec2_info
 
-    - pause:
-        minutes: 1
+    - name: Add the newly created EC2 instance(s) to the local host group
+      local_action: lineinfile 
+                    path=hosts.txt
+                    regexp={{ item.public_ip_address }} 
+                    insertafter="[AWS:children]" line={{ item.public_ip_address }}
+      with_items: '{{ ec2_info.instances }}'
 
     - name: Gathers facts (instance metadata) about Monitoring-Server
       ec2_instance_facts:
