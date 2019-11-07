@@ -39,6 +39,7 @@
     - name: Add the newly created EC2 instance(s) to the local host group
       local_action: lineinfile
                     path=hosts.txt
+                    line=[EC2]
                     regexp={{ item.public_ip_address }}
-                    insertafter="[AWS:children]" line={{ item.public_ip_address }}
+                    insertafter="[EC2]" line={{ item.public_ip_address }}
       with_items: '{{ ec2_info.instances }}'
