@@ -54,6 +54,9 @@
 
     - meta: refresh_inventory
 
+    - pause:
+        minutes: 5
+
 - hosts: EC2
   gather_facts: False
   tasks:
