@@ -1,0 +1,51 @@
+version: '3.5'
+
+services:
+  mysql-server:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  zabbix-java-gateway:
+    image: zabbix/zabbix-java-gateway:latest
+    restart: always
+    depends_on:
+      - mysql-server
+
+  zabbix-server-mysql:
+    image: zabbix/zabbix-server-mysql:latest
+    restart: always
+    environment:
+      DB_SERVER_HOST: mysql-server
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      ZBX_JAVAGATEWAY: zabbix-java-gateway
+    links:
+      - mysql-server:mysql
+      - zabbix-java-gateway:zabbix-java-gateway
+    ports:
+      - "10051:10051"
+    depends_on:
+      - mysql-server
+      - zabbix-java-gateway
+
+  zabbix-web-nginx-mysql:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    restart: always
+    environment:
+      DB_SERVER_HOST: mysql-server
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    links:
+      - mysql-server:mysql
+      - zabbix-server-mysql:zabbix-server
+    ports:
+      - "80:80"
