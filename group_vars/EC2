@@ -1,5 +1,4 @@
 
 ---
 ansible_user                 : ec2-user
-aws_access_key_id            : "{{ lookup('env', 'ansible_aws_access_key') }}"
-aws_secret_access_key        : "{{ lookup('env', 'ansible_aws_secret_key') }}" 
+ansible_ssh_private_key_file : /Users/mihey/Desktop/yuriy-aws-frankfurt.pem

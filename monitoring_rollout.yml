@@ -55,7 +55,7 @@
     - meta: refresh_inventory
 
     - pause:
-        minutes: 5
+        minutes: 10
 
 - hosts: EC2
   gather_facts: False
@@ -64,3 +64,9 @@
       docker_compose:
         definition: zabbix-compose.yml
         state: absent
+      environment:
+        MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+        DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
+        ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
+        MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+        MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
