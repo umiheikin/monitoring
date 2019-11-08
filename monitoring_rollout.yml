@@ -52,6 +52,8 @@
         insertafter="[EC2]" line={{ item.public_ip_address }}
       with_items: '{{ ec2_info.instances }}'
 
+    - meta: refresh_inventory
+
 - hosts: EC2
   gather_facts: False
   tasks:
