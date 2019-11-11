@@ -63,8 +63,7 @@
 
     - name: Waiting for userdata script
       wait_for:
-        path: /usr/local/bin/docker-compose
-        search_regex: "Script has been finished"
+        path: /var/lib/cloud/instance/boot-finished
         timeout: 1000
 
 - hosts: EC2
