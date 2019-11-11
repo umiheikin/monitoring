@@ -14,6 +14,11 @@ sg docker
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
 
+echo "Install python and interpritators"
+sudo yum install -y python3
+pip3 install docker --user
+pip3 install docker-compose --user
+
 echo "Docker has been installed with version $(docker version)"
 
 #Install Docker Compose
