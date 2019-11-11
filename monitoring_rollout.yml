@@ -70,10 +70,10 @@
           path: {{ project_path }}
           state: directory
 
-      -name: Copy zabbix-compose.yml to EC2 instance
-       copy:
-         src: zabbix-compose.yml
-         dest: {{ project_path }}
+      - name: Copy zabbix-compose.yml to EC2 instance
+        copy:
+          src: zabbix-compose.yml
+          dest: {{ project_path }}
 
       - name: Run zabbix-compose
         docker_compose:
