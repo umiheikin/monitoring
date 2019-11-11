@@ -9,7 +9,6 @@
     image: "ami-0badcc5b522737046"
     group: "SSH-HTTP-MONITORING"
     region: "eu-central-1"
-    project_path: "/home/ec2-user/deploy"
   tasks:
     - name: Create EC2 instance and run user_data.sh
       ec2: image={{ image }}
@@ -64,6 +63,8 @@
 
 - hosts: EC2
   gather_facts: False
+  vars:
+    project_path: "/home/ec2-user/deploy"
   tasks:
       - name: Create a directory
         file:
