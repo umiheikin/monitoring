@@ -68,7 +68,7 @@
         docker_compose:
           definition: zabbix-compose.yml
           state: absent
-        environment:
+        env:
           MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
           DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
           ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
