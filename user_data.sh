@@ -16,8 +16,9 @@ sudo systemctl start docker.service
 
 echo "Install python and interpritators"
 sudo yum install -y python3
-sudo su - ec2-user
+umask 022
 pip3 install docker --user
+umask 022
 pip3 install docker-compose --user
 
 echo "Docker has been installed with version $(docker version)"
