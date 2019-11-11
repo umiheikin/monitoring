@@ -82,6 +82,7 @@
           dest: "{{ project_path }}"
 
       - name: Run zabbix-compose
+        become: true
         docker_compose:
           project_src: "{{ project_path }}"
           files: zabbix-compose.yml
