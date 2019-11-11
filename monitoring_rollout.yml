@@ -67,17 +67,17 @@
   tasks:
       - name: Create a directory
         file:
-          path:{{ project_path }}
-          state:directory
+          path: "{{ project_path }}"
+          state: directory
 
       - name: Copy zabbix-compose.yml to EC2 instance
         copy:
           src: zabbix-compose.yml
-          dest:{{ project_path }}
+          dest: "{{ project_path }}"
 
       - name: Run zabbix-compose
         docker_compose:
-          project_src:{{ project_path }}
+          project_src: "{{ project_path }}"
           files: zabbix-compose.yml
         environment:
           MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
