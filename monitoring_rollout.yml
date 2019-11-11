@@ -61,9 +61,11 @@
                     state=started
       with_items: '{{ ec2_info.instances }}' 
 
-    - name: Waiting for docker-compose
+    - name: Waiting for userdata script
       wait_for:
         path: /usr/local/bin/docker-compose
+        search_regex: "Script has been finished"
+        timeout: 1000
 
 - hosts: EC2
   gather_facts: False
