@@ -68,7 +68,7 @@
       - name: Create a directory
         file:
           path:{{ project_path }}
-          state: directory
+          state:directory
 
       - name: Copy zabbix-compose.yml to EC2 instance
         copy:
