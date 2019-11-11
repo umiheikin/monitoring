@@ -65,12 +65,12 @@
   gather_facts: False
   tasks:
       - name: Run zabbix-compose
-      docker_compose:
-        definition: zabbix-compose.yml
-        state: absent
-      environment:
-        MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
-        DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
-        ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
-        MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
-        MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+        docker_compose:
+          definition: zabbix-compose.yml
+          state: absent
+        environment:
+          MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+          DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
+          ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
+          MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+          MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
