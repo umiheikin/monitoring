@@ -55,18 +55,10 @@
     - meta: refresh_inventory
 
     - pause:
-        minutes: 10
+        minutes: 1
 
 - hosts: EC2
   gather_facts: False
   tasks:
-    - name: Deploy zabbix
-      docker_compose:
-        definition: zabbix-compose.yml
-        state: absent
-      environment:
-        MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
-        DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
-        ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
-        MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
-        MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+    - name: Hello
+      shell: echo "Welcome to the new EC2 instance"
