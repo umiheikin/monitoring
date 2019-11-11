@@ -63,6 +63,8 @@
 
 - hosts: EC2
   gather_facts: False
+  tasks:
+      - name: Run zabbix-compose
       docker_compose:
         definition: zabbix-compose.yml
         state: absent
