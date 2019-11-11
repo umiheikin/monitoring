@@ -63,7 +63,7 @@
 
     - name: Waiting for docker-compose
       local_action: wait_for
-                    path: "/usr/local/bin/docker-compose"
+                    path:"/usr/local/bin/docker-compose"
 
 - hosts: EC2
   gather_facts: False
