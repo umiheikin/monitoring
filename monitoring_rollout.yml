@@ -9,6 +9,7 @@
     image: "ami-0badcc5b522737046"
     group: "SSH-HTTP-MONITORING"
     region: "eu-central-1"
+    project_path: "/home/ec2-user/deploy"
   tasks:
     - name: Create EC2 instance and run user_data.sh
       ec2: image={{ image }}
@@ -64,7 +65,23 @@
 - hosts: EC2
   gather_facts: False
   tasks:
+      - name: Create a directory
+        file:
+          path: {{ project_path }}
+          state: directory
+
+      -name: Copy zabbix-compose.yml to EC2 instance
+       copy:
+         src: zabbix-compose.yml
+         dest: {{ project_path }}
+
       - name: Run zabbix-compose
         docker_compose:
-          definition: zabbix-compose.yml
-          state: absent
+          project_src: {{ project_path }}
+          files: zabbix-compose.yml
+        environment:
+          MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+          DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
+          ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
+          MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+          MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
