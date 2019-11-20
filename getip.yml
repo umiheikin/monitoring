@@ -9,7 +9,7 @@
 
   tasks:
 
-    - name: Gathers facts (instance metadata) about Monitoring-Server
+    - name: Gathers facts (instance metadata) about Monitoring-Server feature
       ec2_instance_facts:
         region: "{{ region }}"
         filters: 
