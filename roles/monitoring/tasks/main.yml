@@ -1,7 +1,7 @@
-- hosts: localhost
-  connection: local
-  gather_facts: False
-  tasks:
+---
+#Tasks to create EC2 instance
+-
+  block:
     - name: Create EC2 instance and run user_data.sh
       ec2: image={{ image }}
            instance_type={{ instance_type }}
@@ -52,35 +52,3 @@
                     port=22
                     state=started
       with_items: '{{ ec2_info.instances }}' 
-
-- hosts: EC2
-  gather_facts: False
-  vars:
-    project_path: "/home/ec2-user/deploy"
-  tasks:
-      - name: Waiting for userdata script
-        wait_for:
-          path: /var/lib/cloud/instance/boot-finished
-          timeout: 1000
-
-      - name: Create a directory
-        file:
-          path: "{{ project_path }}"
-          state: directory
-
-      - name: Copy zabbix-compose.yml to EC2 instance
-        copy:
-          src: zabbix-compose.yml
-          dest: "{{ project_path }}"
-
-      - name: Run zabbix-compose
-        become: true
-        docker_compose:
-          project_src: "{{ project_path }}"
-          files: zabbix-compose.yml
-        environment:
-          MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
-          DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
-          ZBX_JAVAGATEWAY: "{{ lookup('env', 'ZBX_JAVAGATEWAY') }}"
-          MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
-          MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"

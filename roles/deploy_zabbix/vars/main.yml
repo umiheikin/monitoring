@@ -1,0 +1,3 @@
+---
+# vars file for deploy_zabbix
+project_path: "/home/ec2-user/deploy"
