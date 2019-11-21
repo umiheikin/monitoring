@@ -1,0 +1,10 @@
+---
+# vars file for monitoring
+
+hostname: Monitoring-Server
+ec2_access_key: "{{ lookup('env', 'ansible_aws_access_key') }}"
+ec2_secret_key: "{{ lookup('env', 'ansible_aws_secret_key') }}"
+instance_type: "t2.micro"
+image: "ami-0badcc5b522737046"
+group: "SSH-HTTP-MONITORING"
+region: "eu-central-1"
