@@ -2,4 +2,7 @@
 - hosts: localhost
   roles:
     - monitoring
+
+- hosts: EC2
+  roles:
     - deploy_zabbix
