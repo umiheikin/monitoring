@@ -20,6 +20,7 @@
   docker_compose:
     project_src: "{{ project_path }}"
     files: zabbix-compose.yml
+    build: yes
   environment:
     MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
     DB_SERVER_HOST: "{{ lookup('env', 'DB_SERVER_HOST') }}"
